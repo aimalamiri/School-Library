@@ -7,6 +7,10 @@ require_relative './classes/capitalize_decorator'
 require_relative './classes/trimmer_decorator'
 
 class App
+  def initialize
+    @books = []
+  end
+
   def run
     actions.each { |key, value| puts "#{key}: #{value}" }
     action = gets.chomp.to_i
@@ -16,6 +20,7 @@ class App
   private
 
   def actions
+    puts # Add a blank line before the actions list
     {
       1 => 'List all books',
       2 => 'List all people',
@@ -30,7 +35,7 @@ class App
   def action(action)
     case action
     when 1
-      puts 'list all books'
+      list_books
     when 2
       puts 'list all people'
     when 3
@@ -79,12 +84,18 @@ class App
     puts "Student with id #{teacher.id} created"
   end
 
+  def list_books
+    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+    run
+  end
+
   def add_book
     print 'Enter the name of the book: '
     name = gets.chomp.to_s
     print 'Enter the author of the book: '
     author = gets.chomp.to_s
-    Book.new(name, author)
+    book = Book.new(name, author)
+    @books << book
     puts 'Book created successfully'
 
     run
