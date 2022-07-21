@@ -34,22 +34,16 @@ class App
   end
 
   def action(action)
-    case action
-    when 1
-      list_books
-    when 2
-      list_people
-    when 3
-      add_person
-    when 4
-      add_book
-    when 5
-      puts 'create a rental'
-    when 6
-      puts 'list all rentals for a given person id'
+    action_list = { 1 => 'list_books', 2 => 'list_people', 3 => 'add_person', 4 => 'add_book', 5 => 'add_rental',
+                    6 => 'list_rentals', 7 => 'exit' }
+
+    if action_list.key?(action)
+      send(action_list[action])
     else
-      puts 'Invalid action'
+      puts 'Invalid input!'
     end
+
+    run # List actions once the user is done with the current action
   end
 
   def add_person
@@ -59,16 +53,12 @@ class App
     puts 'Invalide input' if type != 1 && type != 2
     add_student if type == 1 # Create a student if the user entered 1
     add_teacher if type == 2 # Create a teacher if the user entered 2
-
-    run
   end
 
   def list_people
     @persons.each_with_index do |person, index|
       puts "#{index}) [#{person.class.name}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
     end
-
-    run
   end
 
   def add_student
@@ -110,8 +100,6 @@ class App
     book = Book.new(name, author)
     @books << book
     puts 'Book created successfully'
-
-    run
   end
 end
 
