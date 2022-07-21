@@ -13,6 +13,8 @@ class App
     action(action)
   end
 
+  private
+
   def actions
     {
       1 => 'List all books',
@@ -34,7 +36,7 @@ class App
     when 3
       add_person
     when 4
-      puts 'create a book'
+      add_book
     when 5
       puts 'create a rental'
     when 6
@@ -75,6 +77,17 @@ class App
     specilization = gets.chomp.to_s
     teacher = Teacher.new(specilization, age, name)
     puts "Student with id #{teacher.id} created"
+  end
+
+  def add_book
+    print 'Enter the name of the book: '
+    name = gets.chomp.to_s
+    print 'Enter the author of the book: '
+    author = gets.chomp.to_s
+    Book.new(name, author)
+    puts 'Book created successfully'
+
+    run
   end
 end
 
