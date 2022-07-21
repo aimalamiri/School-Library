@@ -35,7 +35,7 @@ class App
 
   def action(action)
     action_list = { 1 => 'list_books', 2 => 'list_people', 3 => 'add_person', 4 => 'add_book', 5 => 'add_rental',
-                    6 => 'list_rentals', 7 => 'exit' }
+                    6 => 'list_rentals_by_person_id', 7 => 'exit' }
 
     if action_list.key?(action)
       send(action_list[action])
@@ -107,6 +107,21 @@ class App
     puts 'Book created successfully'
   end
 
+  def list_rentals_by_person_id
+    puts 'No person entry found' if @persons.empty?
+    print 'Enter person ID: '
+    id = gets.chomp.to_i
+    @persons.each do |person|
+      if person.id == id
+        person.rentals.each do |rental|
+          puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
+        end
+      else
+        puts "No rentals found for person with id #{id}"
+      end
+    end
+  end
+
   def add_rental
     puts 'Select a book from the following list by number'
     list_books(show_index: true)
@@ -122,6 +137,7 @@ class App
     date = gets.chomp.to_s
 
     Rental.new(date, @books[book], @persons[person])
+
     puts 'Rental created successfully'
   end
 end
