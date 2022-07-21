@@ -5,9 +5,15 @@ class Student < Person
     super(age, parent_permission: parent_permission)
     @classroom = classroom
     @name = name
+    @classroom = nil
   end
 
   def play_hooky
     '¯\(ツ)/¯'
+  end
+
+  def add_classroom(classroom)
+    @classroom = classroom
+    classroom.students << self
   end
 end
