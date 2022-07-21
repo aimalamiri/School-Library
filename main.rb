@@ -8,6 +8,7 @@ require_relative './classes/trimmer_decorator'
 
 class App
   def initialize
+    @persons = []
     @books = []
   end
 
@@ -37,7 +38,7 @@ class App
     when 1
       list_books
     when 2
-      puts 'list all people'
+      list_people
     when 3
       add_person
     when 4
@@ -62,6 +63,14 @@ class App
     run
   end
 
+  def list_people
+    @persons.each_with_index do |person, index|
+      puts "#{index}) [#{person.class.name}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
+    end
+
+    run
+  end
+
   def add_student
     print 'Enter the name of the student: '
     name = gets.chomp.to_s
@@ -70,6 +79,8 @@ class App
     print 'Has parent permission? [Y/N]: '
     parent_permission = gets.chomp.to_s.downcase == 'y'
     student = Student.new(age, name, parent_permission: parent_permission)
+    @persons << student
+
     puts "Student with id #{student.id} created"
   end
 
@@ -81,6 +92,8 @@ class App
     print "And teacher's specialization: "
     specilization = gets.chomp.to_s
     teacher = Teacher.new(specilization, age, name)
+    @persons << teacher
+
     puts "Student with id #{teacher.id} created"
   end
 
