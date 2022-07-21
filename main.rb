@@ -55,9 +55,11 @@ class App
     add_teacher if type == 2 # Create a teacher if the user entered 2
   end
 
-  def list_people
+  def list_people(show_index: false)
     @persons.each_with_index do |person, index|
-      puts "#{index}) [#{person.class.name}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
+      result = "[#{person.class.name}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
+      result = "#{index}) " + result if show_index
+      puts result
     end
   end
 
@@ -87,9 +89,12 @@ class App
     puts "Student with id #{teacher.id} created"
   end
 
-  def list_books
-    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
-    run
+  def list_books(show_index: false)
+    @books.each_with_index do |book, index|
+      result = "Title: \"#{book.title}\", Author: #{book.author}"
+      result = " #{index}) " + result if show_index
+      puts result
+    end
   end
 
   def add_book
@@ -100,6 +105,24 @@ class App
     book = Book.new(name, author)
     @books << book
     puts 'Book created successfully'
+  end
+
+  def add_rental
+    puts 'Select a book from the following list by number'
+    list_books(show_index: true)
+    book = gets.chomp.to_i
+    puts 'Invalid input!' if !(book.is_a? Integer) && book >= @books.length
+
+    puts 'Select a person from the following list by number (not id)'
+    list_people(show_index: true)
+    person = gets.chomp.to_i
+    puts 'Invalide input!' if !(person.is_a? Integer) && person >= @people.length
+
+    print 'Please enter the date: '
+    date = gets.chomp.to_s
+
+    Rental.new(date, @books[book], @persons[person])
+    puts 'Rental created successfully'
   end
 end
 
