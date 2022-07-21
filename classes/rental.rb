@@ -1,10 +1,11 @@
 class Rental
   attr_accessor :date
+  attr_reader :book, :person
 
-  def initialize(date, book, rental)
+  def initialize(date, book, person)
     @date = date
-    @book = book
-    @person = rental
+    add_book(book)
+    add_person(person)
   end
 
   def add_book(book)
