@@ -1,6 +1,9 @@
+require_relative './file_writer'
+
 class ManageBooks
   def initialize(books)
     @books = books
+    @file = FileWriter.new('books.json')
   end
 
   def list_books(show_index: false)
@@ -18,6 +21,7 @@ class ManageBooks
     author = gets.chomp.to_s
     book = Book.new(name, author)
     @books << book
+    @file.write_data(book)
     puts 'Book created successfully'
   end
 end
