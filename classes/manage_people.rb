@@ -48,6 +48,8 @@ class ManagePeople
     teacher = Teacher.new(specilization, age, name)
     @persons << teacher
 
+    @file.write_data(teacher)
+
     puts "Student with id #{teacher.id} created"
   end
 end
