@@ -1,6 +1,9 @@
+require_relative './file_writer'
+
 class ManagePeople
   def initialize(persons = [])
     @persons = persons
+    @file = FileWriter.new('persons.json')
   end
 
   def add_person
@@ -29,6 +32,8 @@ class ManagePeople
     parent_permission = gets.chomp.to_s.downcase == 'y'
     student = Student.new(age, name, parent_permission: parent_permission)
     @persons << student
+
+    @file.write_data(student)
 
     puts "Student with id #{student.id} created"
   end
