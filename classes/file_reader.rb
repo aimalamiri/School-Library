@@ -8,6 +8,8 @@ class FileReader
   def read_data(_class_name)
     dir = FileHandler.check_or_make_directory
     list = []
+    return [] unless File.exist?("#{dir}/#{@file}")
+
     File.foreach("#{dir}/#{@file}") do |line|
       line = JSON.parse(line.to_json)
       object = nil
@@ -23,6 +25,8 @@ class FileReader
   def read_relations(persons, books)
     dir = FileHandler.check_or_make_directory
     list = []
+    return [] unless File.exist?("#{dir}/#{@file}")
+
     File.foreach("#{dir}/#{@file}") do |line|
       line = JSON.parse(line.to_json)
       object = nil

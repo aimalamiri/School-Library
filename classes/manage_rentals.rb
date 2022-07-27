@@ -33,6 +33,8 @@ class ManageRentals
   end
 
   def add_rental
+    load_data
+
     puts 'Select a book from the following list by number'
     @manage_books.list_books(show_index: true)
     book = gets.chomp.to_i
@@ -49,5 +51,12 @@ class ManageRentals
     rental = Rental.new(date, @books[book], @persons[person])
     @writer.write_data(rental)
     puts 'Rental created successfully'
+  end
+
+  def load_data
+    @manage_people.load_people
+    @persons = @manage_people.persons
+    @manage_books.load_books
+    @books = @manage_books.books
   end
 end

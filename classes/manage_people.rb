@@ -2,6 +2,8 @@ require_relative './file_writer'
 require_relative './file_reader'
 
 class ManagePeople
+  attr_accessor :persons
+
   def initialize(persons = [])
     @persons = persons
     @writer = FileWriter.new('persons.json')
