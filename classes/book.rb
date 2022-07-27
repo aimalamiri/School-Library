@@ -1,6 +1,10 @@
+require_relative './jsonable'
+
 class Book
   attr_accessor :title, :author
   attr_reader :rentals
+
+  include JSONable
 
   def initialize(title, author)
     @title = title

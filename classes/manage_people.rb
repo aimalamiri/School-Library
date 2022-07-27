@@ -1,6 +1,14 @@
+require_relative './file_writer'
+require_relative './file_reader'
+
 class ManagePeople
+  attr_accessor :persons
+
   def initialize(persons = [])
     @persons = persons
+    @writer = FileWriter.new('persons.json')
+    @reader = FileReader.new('persons.json')
+    load_people
   end
 
   def add_person
@@ -30,6 +38,8 @@ class ManagePeople
     student = Student.new(age, name, parent_permission: parent_permission)
     @persons << student
 
+    @writer.write_data(student)
+
     puts "Student with id #{student.id} created"
   end
 
@@ -43,6 +53,13 @@ class ManagePeople
     teacher = Teacher.new(specilization, age, name)
     @persons << teacher
 
+    @writer.write_data(teacher)
+
     puts "Student with id #{teacher.id} created"
+  end
+
+  def load_people
+    @persons = @reader.read_data('Person')
+    @persons
   end
 end

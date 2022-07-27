@@ -1,8 +1,11 @@
+require_relative './jsonable'
 require_relative './nameable'
 
 class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id, :rentals
+
+  include JSONable
 
   def initialize(age, name = 'Unknown')
     @id = rand(1..10_000)
