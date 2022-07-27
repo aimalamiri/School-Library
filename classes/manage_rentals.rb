@@ -16,14 +16,15 @@ class ManageRentals
     print 'Enter person ID: '
     id = gets.chomp.to_i
     @persons.each do |person|
-      if person.id == id
-        person.rentals.each do |rental|
-          puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
-        end
-      else
-        puts "No rentals found for person with id #{id}"
+      puts "No rentals found for person with id #{id}" if person.id == id && person.rentals.empty?
+      next unless person.id == id
+
+      person.rentals.each do |rental|
+        puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
       end
+      return true
     end
+    puts "Person with id #{id} does not exist"
   end
 
   def add_rental

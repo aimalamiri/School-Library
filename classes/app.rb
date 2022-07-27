@@ -8,11 +8,11 @@ require_relative './manage_rentals'
 
 class App
   def initialize
-    @persons = []
-    @books = []
-
     @manage_people = ManagePeople.new(@persons)
     @manage_books = ManageBooks.new(@books)
+    @persons = @manage_people.load_people
+    @books = @manage_books.load_books
+
     @manage_rentals = ManageRentals.new(@persons, @books)
   end
 
