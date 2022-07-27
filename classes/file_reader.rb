@@ -13,7 +13,7 @@ class FileReader
     File.foreach("#{dir}/#{@file}") do |line|
       line = JSON.parse(line.to_json)
       object = nil
-      JSON.load(line).each do |var, val|
+      JSON.parse(line).each do |var, val|
         object = Object.const_get(val).new('', '') if var == 'class'
       end
       object.from_json!(line)
@@ -30,7 +30,7 @@ class FileReader
     File.foreach("#{dir}/#{@file}") do |line|
       line = JSON.parse(line.to_json)
       object = nil
-      JSON.load(line).each do |var, val|
+      JSON.parse(line).each do |var, val|
         object = Object.const_get(val).new(nil, nil, nil) if var == 'class'
       end
       object.from_json!(line, persons, books)

@@ -23,18 +23,21 @@ class Rental
   end
 
   def from_json!(json, persons, books)
-    JSON.load(json).each do |var, val|
+    JSON.parse(json).each do |var, val|
       @date = val if var == 'date'
-      if var == 'person'
-        persons.each do |person|
-          add_person(person) if person.id == val
-        end
-      end
+      add_person_by_id(persons, val) if var == 'person'
+
       next unless var == 'book'
 
       books.each do |book|
         add_book(book) if book.title == val
       end
+    end
+  end
+
+  def add_person_by_id(persons, id)
+    persons.each do |person|
+      add_person(person) if person.id == id
     end
   end
 end
