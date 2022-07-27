@@ -1,6 +1,8 @@
 require_relative './rental'
 require_relative './manage_books'
 require_relative './manage_people'
+require_relative './file_writer'
+require_relative './file_reader'
 
 class ManageRentals
   def initialize(persons, books)
@@ -9,6 +11,9 @@ class ManageRentals
 
     @manage_people = ManagePeople.new(@persons)
     @manage_books = ManageBooks.new(@books)
+    @writer = FileWriter.new('rentals.json')
+    @reader = FileReader.new('rentals.json')
+    @reader.read_relations(@persons, @books)
   end
 
   def list_rentals_by_person_id
@@ -41,8 +46,8 @@ class ManageRentals
     print 'Please enter the date: '
     date = gets.chomp.to_s
 
-    Rental.new(date, @books[book], @persons[person])
-
+    rental = Rental.new(date, @books[book], @persons[person])
+    @writer.write_data(rental)
     puts 'Rental created successfully'
   end
 end
