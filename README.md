@@ -7,7 +7,7 @@
 ## Built With
 
 - Ruby
-- Linter: [Rubocop](https://rubocop.org/)
+- Rspec
 
 ## Getting Started
 
